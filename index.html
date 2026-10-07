@@ -25,6 +25,26 @@ filter    1s cubic-bezier(.16,.84,.34,1);transition-delay: var(--d, 0ms);will-ch
 0 0 66px rgba(120,26,20,.24);}.end-sig.red-dim{color: #7b241d;letter-spacing: .5em;text-shadow: 0 0 14px rgba(120,26,20,.3);}.rec a{display: inline-flex;align-items: center;gap: 9px;margin-top: 16px;padding: 6px 14px;font-family: var(--font-pixel);font-size: 11px;letter-spacing: .2em;line-height: 1;color: var(--accent, var(--ink-dim));text-decoration: none;border: 1px solid currentColor;background: rgba(255,255,255,.04);clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px));transition: background .35s ease, transform .35s ease, box-shadow .35s ease;}.rec a::after{content: "↗";font-size: 11px;opacity: .75;transform: translateY(-1px);}.rec a:hover{background: rgba(255,255,255,.12);transform: translateY(-2px);box-shadow: 0 0 18px -4px currentColor;}.rec a:focus-visible{outline: 1px solid currentColor;outline-offset: 3px;}
 
 .rec-slide{position: relative;margin-top: 16px;aspect-ratio: 16 / 9;border: 1px solid var(--line);background: rgba(0,0,0,.35);box-shadow: 0 0 18px -6px var(--accent, transparent);}.rec-slide iframe{position: absolute; inset: 0;width: 100%; height: 100%;border: 0;display: block;}.rec:has(.rec-slide):hover{ transform: none; }
+/* 成果物カード（スクショ・技術・リンク付き） */
+#abyss-root{ --c-work: #c3cfd6; }
+.rec[data-kind="work"]{ --accent: var(--c-work); }
+.work-shots{display: grid; grid-template-columns: 1fr 1fr; gap: 10px;margin-top: 18px;}
+.rec .work-shots a.shot{position: relative; display: block;margin: 0; padding: 0;aspect-ratio: 4 / 3; overflow: hidden;border: 1px solid var(--line);background: #05090b;clip-path: none;box-shadow: inset 0 0 0 1px rgba(0,0,0,.4);}
+.rec .work-shots a.shot::after{ content: none; }
+.rec .work-shots a.shot:hover{ transform: none; box-shadow: 0 0 18px -6px var(--accent); }
+.shot img{display: block; width: 100%; height: 100%;object-fit: cover; object-position: top left;filter: saturate(.85) brightness(.9);transition: transform .6s ease, filter .6s ease;}
+.shot:hover img{ transform: scale(1.04); filter: none; }
+.shot-cap{position: absolute; left: 0; bottom: 0;padding: 3px 8px 2px;font-family: var(--font-pixel); font-size: 9px; letter-spacing: .25em;color: var(--ink);background: rgba(4,8,10,.78);}
+.work-tech{display: flex; flex-wrap: wrap; gap: 6px;margin: 14px 0 0; padding: 0; list-style: none;}
+.work-tech li{padding: 2px 9px;font-family: var(--font-pixel); font-size: 10px; letter-spacing: .12em;color: var(--ink-dim);border: 1px solid var(--line);background: rgba(255,255,255,.03);}
+.rec p.work-note{ font-size: 12px; color: var(--ink-faint); }
+.work-links{ display: flex; flex-wrap: wrap; gap: 10px; }
+.rec .work-links a.work-play{color: #ffe2a6;background: rgba(255,210,122,.10);}
+.rec .work-links a.work-play::after{ content: "▶"; font-size: 9px; }
+.work-play small{font-size: 9px; letter-spacing: .1em; opacity: .7;}
+@media (max-width: 640px){
+.work-shots{ grid-template-columns: 1fr; }
+}
 /* 1カラム時もPC版と同じく、キャラをセクションに貼り付けて本文と一緒に流す。
    本文と同じグリッドセルに重ね、画面右下に小さく sticky させる */
 @media (max-width: 1080px){
@@ -54,7 +74,8 @@ filter    1s cubic-bezier(.16,.84,.34,1);transition-delay: var(--d, 0ms);will-ch
       <div class="hud-tick" style="--p:0">    <b>0m</b></div>
       <div class="hud-tick" style="--p:.28"><b>1350m</b></div>
       <div class="hud-tick" style="--p:.62"><b>2600m</b></div>
-      <div class="hud-tick" style="--p:1">   <b>7000m</b></div>
+      <div class="hud-tick" style="--p:.85"><b>7000m</b></div>
+      <div class="hud-tick" style="--p:1">   <b>12000m</b></div>
     </div>
     <div class="hud-readout">
       <div class="hud-depth"><span id="hud-num">0</span><i>m</i></div>
@@ -171,7 +192,6 @@ filter    1s cubic-bezier(.16,.84,.34,1);transition-delay: var(--d, 0ms);will-ch
         <p class="sh-index">2nd LAYER / 1350 — 2600m</p>
         <h2 class="sh-name">Milestone 2<b>深界二層 ── 誘いの森</b></h2>
         <p class="sh-desc">絡み合う木々が上下の感覚を奪う。長く、深い森。</p>
-        <p class="sh-here"><span></span>現在地</p>
       </div>
       <div class="stratum-body">
         <div class="records">
@@ -240,35 +260,124 @@ filter    1s cubic-bezier(.16,.84,.34,1);transition-delay: var(--d, 0ms);will-ch
                       allowfullscreen></iframe>
             </div>
           </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.09.08</time><span class="tag">SUCCESS</span></div>
+            <h3>Python Module 09</h3>
+          </article>
           <article class="rec reveal" data-kind="event">
             <div class="rec-head"><time>2026.09.05</time><span class="tag">EVENT</span></div>
             <h3> 【ハッカソン】株式会社シンシア<br>2日間でCEOを超えるプロダクトをつくれへ参加<br>— 3位,審査員賞入賞</h3>
             <p>Human Time（人が人として、自らの意思で考え、感じ、向き合い、より良い未来をつくろうとする時間）を増やすことをテーマに、育児支援の包括アプリを即席チームで開発した。</p>
           </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.09.12</time><span class="tag">SUCCESS</span></div>
+            <h3>Born2beroot</h3>
+            <p>ディスクを暗号化し、厳重なパスワード設定、ファイアウォール、サーバー監視スクリプトを導入してインフラ基盤を作成する課題。<br>Bonusでは、WordPressが動く環境を構築し、現ポートフォリオのプロトタイプを作成した。</p>
+          </article>
+          <article class="rec rec-work reveal" data-kind="task">
+            <div class="rec-head"><time>2026.09.17</time><span class="tag">SUCCESS</span></div>
+            <h3>A-Maze-ing</h3>
+            <p>迷路生成とその解法ルートを可視化するペア課題。生成は棒倒し法、バックトラック、解法は幅優先探索、ダイクストラ法で実装。<br>Bonusではアルゴリズムの切り替えや、ルート表示のアニメーション、ゲームモードを実装した。</p>
+            <div class="work-shots">
+              <a class="shot" href="assets/amazing_path.png" target="_blank" rel="noopener">
+                <img src="assets/amazing_path.png" alt="A-Maze-ing の迷路と最短経路の画面" loading="lazy" width="960" height="686">
+                <span class="shot-cap">SOLVER</span>
+              </a>
+              <a class="shot" href="assets/amazing_game.png" target="_blank" rel="noopener">
+                <img src="assets/amazing_game.png" alt="A-Maze-ing のゲームモードの画面" loading="lazy" width="960" height="686">
+                <span class="shot-cap">GAME MODE</span>
+              </a>
+            </div>
+            <ul class="work-tech">
+              <li>Python</li><li>pygame</li><li>BFS / Dijkstra</li><li>mypy</li>
+            </ul>
+            <div class="work-links">
+              <a class="work-play" href="play/amazing/index.html" target="_blank" rel="noopener">PLAY<small>PC・キーボード推奨</small></a>
+              <a href="https://github.com/benat-library/A-Maze-ing" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </article>
+          
         </div>
         <div class="rail"><div class="rail-in reveal"><canvas class="art" data-art="noa2" width="280" height="370"></canvas></div></div>
       </div>
     </section>
 
     <!-- ---------- 深界三層 ---------- -->
-    <section class="stratum unknown" id="layer-3" data-layer="3" data-from="2600" data-to="7000"
+    <section class="stratum flip" id="layer-3" data-layer="3" data-from="2600" data-to="7000"
              data-name="深界三層" data-sub="大断層">
       <div class="stratum-head reveal">
         <p class="sh-index">3rd LAYER / 2600 — 7000m</p>
         <h2 class="sh-name">Milestone 3<b>深界三層 ── 大断層</b></h2>
-        <p class="sh-desc">垂直に切り立つ、巨大な縦穴。</p>
+        <p class="sh-desc">灰色の絶壁が、どこまでも垂直に続く。その壁面に無数の洞窟が網の目のように走っている。</p>
+        <p class="sh-here"><span></span>現在地</p>
+      </div>
+      <div class="stratum-body">
+        <div class="records">
+          <article class="rec reveal" data-kind="milestone">
+            <div class="rec-head"><time>2026.09.17</time><span class="tag">MILESTONE</span></div>
+            <h3>Milestone 3 突入</h3>
+            <p>二層を抜け、大断層の縁にロープを掛ける。ここからは、ほぼ垂直の下り。</p>
+          </article>
+          <article class="rec rec-work reveal" data-kind="work">
+            <div class="rec-head"><time>2026.10.01 — 10.04</time><span class="tag">WORKS</span></div>
+            <h3>POKER42 ── ポーカー部スコア管理</h3>
+            <p>42 のポーカー部向けに、月間リングの順位・スコア入力・個人戦績・トーナメント表をまとめた Web アプリ。Discord でログインし、42 のサーバーに入っている人だけが使える。</p>
+            <div class="work-shots">
+              <a class="shot" href="assets/poker_1.png" target="_blank" rel="noopener">
+                <img src="assets/poker_1.png" alt="POKER42 のホーム画面（月間リング一覧）" loading="lazy" width="736" height="413">
+                <span class="shot-cap">HOME</span>
+              </a>
+              <a class="shot" href="assets/poker_2.png" target="_blank" rel="noopener">
+                <img src="assets/poker_2.png" alt="POKER42 のマイページ（1戦ごとの成績）" loading="lazy" width="713" height="626">
+                <span class="shot-cap">MY PAGE</span>
+              </a>
+            </div>
+            <ul class="work-tech">
+              <li>TypeScript</li><li>Hono</li><li>Cloudflare Workers</li><li>D1</li><li>Discord OAuth</li>
+            </ul>
+            <p class="work-note">※ 部員限定のため、アプリ本体は公開していません。</p>
+            <div class="work-links">
+              <a href="https://github.com/benat-library/Poker_Sore_Rank" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.10.01--</time><span class="tag">IN PROGRESS</span></div>
+            <h3>Philosophers</h3>
+            <p>食卓を囲む哲学者たちを、スレッドとミューテックスで餓死させずに回し続ける課題。（ダミー）</p>
+          </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.--.--</time><span class="tag">NEXT</span></div>
+            <h3>minishell</h3>
+            <p>bash を手本に、小さなシェルをチームで組み上げる。（ダミー）</p>
+          </article>
+        </div>
+        <div class="rail"><div class="rail-in reveal"><div class="noa-wrap">
+          <!-- ロープはノアのキャンバスをはみ出して上へ伸びるので、ツタと同じく別キャンバスに描く -->
+          <canvas class="art vine-cv" data-art="rope3" width="280" height="100"></canvas>
+          <canvas class="art" data-art="noa3" width="280" height="370"></canvas>
+        </div></div></div>
+      </div>
+    </section>
+
+    <!-- ---------- 深界四層（未到達） ---------- -->
+    <section class="stratum unknown" id="layer-4" data-layer="4" data-from="7000" data-to="12000"
+             data-name="深界四層" data-sub="巨人の盃">
+      <div class="stratum-head reveal">
+        <p class="sh-index">4th LAYER / 7000 — 12000m</p>
+        <h2 class="sh-name">Milestone 4<b>深界四層 ── 巨人の盃</b></h2>
+        <p class="sh-desc">縦穴の底に、まだ見ぬ層が口を開けている。</p>
       </div>
       <div class="stratum-body solo">
         <div class="unknown-block reveal">
           <p class="unknown-mark red">???</p>
           <p class="unknown-note">未到達 ── UNEXPLORED</p>
         </div>
-        <div class="rail"><div class="rail-in reveal"><canvas class="art" data-art="noa3" width="280" height="370"></canvas></div></div>
+        <div class="rail"><div class="rail-in reveal"><canvas class="art" data-art="noa4" width="280" height="370"></canvas></div></div>
       </div>
     </section>
 
     <!-- ---------- 終端 ---------- -->
-    <section class="stratum end-sec" data-layer="end" data-from="7000" data-to="7000" data-name="深界三層">
+    <section class="stratum end-sec" id="layer-end" data-layer="end" data-from="12000" data-to="12000" data-name="深界四層">
       <div class="end-wrap">
         <p class="end-text red">潜降は、まだ続いている。</p>
         <p class="end-sig red-dim">THE DESCENT CONTINUES</p>
@@ -632,14 +741,19 @@ var FLOWER = [
 '.....oco.....',
 '.....o.o.....'
 ];
+// 三層用：NOA_B（片手を上げて握るポーズ）の顔だけ NOA_C（疲れ顔）に差し替える
+var NOA_E = NOA_B.map(function (row, i) {
+return i < 25 ? NOA_C[i].slice(0, 31) + row.slice(31) : row;
+});
 var FADE_STEPS = 13;
 var SPR = {
-noaA: null, noaB: null, noaD: null, fade: [], flower: null, flowerS: null
+noaA: null, noaB: null, noaD: null, noaE: null, fade: [], flower: null, flowerS: null
 };
 function buildSprites() {
 SPR.noaA    = makeSprite(PAL, NOA_A);
 SPR.noaB    = makeSprite(PAL, NOA_B);
 SPR.noaD    = makeSprite(PAL_TIRED, NOA_D);
+SPR.noaE    = makeSprite(PAL_TIRED, NOA_E);
 SPR.fade = [];
 for (var i = 0; i < FADE_STEPS; i++) {
 SPR.fade.push(makeSprite(mixPal(PAL, PAL_TIRED, i / (FADE_STEPS - 1)), NOA_C));
@@ -651,7 +765,8 @@ var LAYERC = {
 '0':     { a: ['#77aecf', '#e0904a'], b: ['#5f9a70', '#7f9c4c'], pow: 2.1 },
 '1':     { a: ['#5f9a70', '#7f9c4c'], b: ['#1f5a4c', '#17423a'], pow: 1.3 },
 '2':     { a: ['#1f5a4c', '#17423a'], b: ['#0a2434', '#05141f'], pow: 1.0 },
-'3':     { a: ['#0a2434', '#05141f'], b: ['#000000', '#000000'], pow: 1.5 },
+'3':     { a: ['#0a2434', '#05141f'], b: ['#0f1112', '#1a1b1c'], pow: 0.8 },
+'4':     { a: ['#0f1112', '#1a1b1c'], b: ['#000000', '#02060a'], pow: 1.2 },
 'end':   { a: ['#000000', '#000000'], b: ['#000000', '#000000'], pow: 1.0 }
 };
 (function () {
@@ -666,6 +781,11 @@ var k = ease(Math.pow(clamp(p, 0, 1), L.pow));
 return { top: mixRGB(L.a[0], L.b[0], k), bot: mixRGB(L.a[1], L.b[1], k) };
 }
 var STICKY_TOP = 0.22;
+// 各層の S.d の範囲（5 で割る前の値）。三層・四層は終端手前に詰めて入れる
+var DRANGE = {
+'title': [0, 1], '0': [1, 2], '1': [2, 3], '2': [3, 4],
+'3': [4, 4.4], '4': [4.4, 4.8], 'end': [4.8, 5]
+};
 var S = {
 y: 0,
 t: 0,
@@ -676,6 +796,7 @@ gp: 0,
 gq: 0,
 depth: 0,
 layerName: '地上',
+w3: 0,
 top: [127, 182, 214],
 bot: [232, 154, 82]
 };
@@ -703,6 +824,69 @@ RIDGES = [
 { off: 0, w: 0.034, amp: 3.8, sp: 0.25, dark: 0.80, tex: 0.09, pts: ridge(88, hn, 0, 3.8) },
 { off: 1, w: 0.030, amp: 3.6, sp: 0.25, dark: 0.80, tex: 0.09, pts: ridge(95, hn, 0, 3.6) }
 ];
+// 三層の壁に開いた横穴。手前の細い壁（li 4,5）には開けない
+var hr = rng(303);
+for (var li = 0; li < RIDGES.length; li++) {
+var R = RIDGES[li];
+R.holes = [];
+if (li >= 4) continue;
+var nh = 1 + Math.floor(hr() * 2);
+for (var k = 0; k < nh; k++) {
+R.holes.push({
+i: Math.floor((k + hr() * 0.7) / nh * R.pts.length),
+w: 4 + Math.floor(hr() * 4),
+h: 5 + Math.floor(hr() * 5),
+ins: 2 + Math.floor(hr() * 4),
+lit: hr() < 0.4, ph: hr() * 6.28
+});
+}
+}
+}
+// 三層の色と、縦穴の奥を降りていく誰かのランプ
+var ROCK3 = [78, 80, 82];
+var SHAFT_LAMPS = [
+{ x: -0.05, y: 0.15, v: 0.9, ph: 0.0 },
+{ x:  0.04, y: 0.55, v: 0.6, ph: 2.1 },
+{ x:  0.10, y: 0.92, v: 1.2, ph: 4.3 }
+];
+function drawShaft3() {
+var w3 = S.w3;
+if (w3 <= 0.01) return;
+var sw = silo.width, sh = silo.height, cx = sw / 2, hw = sw * 0.30;
+// 奥の壁の地層：縦穴の奥で U 字にたわむ弧。中央ほど霧に溶けて薄くなる
+var gap = 17, sag = Math.max(8, sh * 0.09);
+var off = ((S.y * 0.02 / PIX) % gap + gap) % gap;
+silx.fillStyle = '#a3a7aa';
+for (var y0 = -gap - sag + off; y0 < sh; y0 += gap) {
+for (var x = Math.round(cx - hw); x < cx + hw; x += 2) {
+var u = (x - cx) / hw;
+var au = Math.abs(u);
+silx.globalAlpha = w3 * 0.07 * (0.35 + 0.65 * au) * (1 - Math.pow(au, 6));
+silx.fillRect(x, Math.round(y0 + (1 - u * u) * sag), 2, 1);
+}
+}
+// 遠くのランプとロープ
+var span = sh * 1.8;
+for (var i = 0; i < SHAFT_LAMPS.length; i++) {
+var Lp = SHAFT_LAMPS[i];
+var lx = Math.round(cx + Lp.x * sw + Math.sin(S.time * 0.3 + Lp.ph) * 1.5);
+var ly = Math.round(((Lp.y * span + S.time * Lp.v - S.y * 0.06 / PIX) % span + span) % span - sh * 0.4);
+if (ly < -4 || ly > sh + 4) continue;
+silx.globalAlpha = w3 * 0.16;
+silx.fillStyle = '#b8b2a4';
+if (ly > 0) silx.fillRect(lx, 0, 1, ly);
+silx.fillStyle = '#ffd9a0';
+silx.globalAlpha = w3 * 0.14;
+silx.fillRect(lx - 2, ly, 5, 1);
+silx.fillRect(lx, ly - 2, 1, 5);
+silx.globalAlpha = w3 * 0.30;
+silx.fillRect(lx - 1, ly, 3, 1);
+silx.fillRect(lx, ly - 1, 1, 3);
+silx.globalAlpha = w3 * (0.75 + 0.25 * Math.sin(S.time * 2 + Lp.ph));
+silx.fillStyle = '#fff3d6';
+silx.fillRect(lx, ly, 1, 1);
+}
+silx.globalAlpha = 1;
 }
 var motes = [];
 function buildMotes() {
@@ -994,7 +1178,7 @@ rock:   band(S.d, -1,   -0.5, 0.56, 0.72),
 vine:   band(S.d, 0.30, 0.40, 0.68, 0.84),
 tree1:  band(S.d, 0.31, 0.42, 0.62, 0.78),
 grove:  band(S.d, 0.32, 0.44, 0.60, 0.75),
-tree2:  band(S.d, 0.54, 0.64, 0.74, 0.87)
+tree2:  band(S.d, 0.54, 0.64, 0.74, 0.82)
 };
 if (alpha.flower <= 0.01 && alpha.rock <= 0.01 && alpha.vine <= 0.01 &&
 alpha.tree1 <= 0.01 && alpha.grove <= 0.01 && alpha.tree2 <= 0.01) return;
@@ -1204,6 +1388,70 @@ buildRidges(silo.height + 4);
 bgx.imageSmoothingEnabled = false;
 silx.imageSmoothingEnabled = false;
 }
+// 三層の岩壁の上に地層の筋と横穴を描く（行ごとの塗りが終わってから重ねる）
+function drawWall3(R, li, base, shift, edges, strata) {
+var sw = silo.width, sh = silo.height, w3 = S.w3;
+var stL = css(mixRGB(base, [255, 255, 255], 0.09), 1);
+var stD = css(mixRGB(base, [0, 0, 0], 0.30), 1);
+var j, k;
+// 地層：外側ほど高く、縦穴側へ向かって垂れ下がる弧
+for (j = 0; j < strata.length; j += 3) {
+var yy = strata[j], edge = strata[j + 1], light = strata[j + 2] === 0;
+if (edge < 4) continue;
+silx.globalAlpha = w3 * (light ? 0.9 : 0.6);
+silx.fillStyle = light ? stL : stD;
+var q = edge / 4;
+for (k = 0; k < 4; k++) {
+var a0 = Math.round(k * q), a1 = Math.round((k + 1) * q) - 1;
+if (a1 <= a0) continue;
+silx.fillRect(R.off === 0 ? a0 : sw - a1, yy + k, a1 - a0, 1);
+}
+}
+// 横穴
+var len = R.pts.length;
+for (j = 0; j < R.holes.length; j++) {
+var Ho = R.holes[j];
+var y0 = ((Ho.i - shift) % len + len) % len;
+for (var rep = 0; rep < 2; rep++, y0 -= len) {
+var yc = Math.round(y0 + Ho.h / 2);
+if (y0 + Ho.h < 0 || y0 > sh || !edges[clamp(yc, 0, sh - 1)]) continue;
+var e = edges[clamp(yc, 0, sh - 1)];
+if (e - Ho.ins - Ho.w < 2) continue;
+var cxh = R.off === 0 ? e - Ho.ins - Ho.w / 2 : sw - e + Ho.ins + Ho.w / 2;
+// 上の縁の影と、下の縁の明るい岩棚
+silx.globalAlpha = w3 * 0.7;
+silx.fillStyle = stD;
+silx.fillRect(Math.round(cxh - Ho.w / 2), Math.round(y0) - 1, Ho.w, 1);
+var holeFar = css(mixRGB(base, [0, 0, 0], 0.88), 1);
+var holeFloor = css(mixRGB(base, [0, 0, 0], 0.62), 1);
+var holeLip = css(mixRGB(base, [255, 255, 255], 0.16), 1);
+for (var r = 0; r < Ho.h; r++) {
+// 上は丸く、下は平らなアーチ形
+var tt = r / Ho.h;
+var hh = tt < 0.5
+? Math.max(1, Math.round(Ho.w / 2 * Math.sqrt(1 - Math.pow(1 - tt * 2, 2))))
+: Math.round(Ho.w / 2);
+silx.globalAlpha = w3 * 0.92;
+silx.fillStyle = r >= Ho.h - 2 ? holeFloor : holeFar;
+silx.fillRect(Math.round(cxh - hh), Math.round(y0) + r, hh * 2, 1);
+// 縦穴側の縁だけ光を受けて明るい
+silx.fillStyle = holeLip;
+silx.globalAlpha = w3 * 0.55;
+silx.fillRect(R.off === 0 ? Math.round(cxh + hh) : Math.round(cxh - hh) - 1, Math.round(y0) + r, 1, 1);
+}
+silx.globalAlpha = w3 * 0.8;
+silx.fillStyle = stL;
+silx.fillRect(Math.round(cxh - Ho.w / 2) - 1, Math.round(y0) + Ho.h, Ho.w + 2, 1);
+if (Ho.lit) {
+// 横穴の奥に、誰かのランプの明かりがちらつく
+silx.globalAlpha = w3 * (0.45 + 0.35 * Math.sin(S.time * 1.3 + Ho.ph));
+silx.fillStyle = '#ffcf80';
+silx.fillRect(Math.round(cxh), Math.round(y0 + Ho.h * 0.6), 1, 1);
+}
+}
+}
+silx.globalAlpha = 1;
+}
 function drawBG() {
 var w = bg.width, h = bg.height;
 var g = { top: S.top, bot: S.bot };
@@ -1223,13 +1471,19 @@ bgx.fillRect(0, 0, w, h);
 }
 var sw = silo.width, sh = silo.height;
 silx.clearRect(0, 0, sw, sh);
-var grow = 0.45 + 0.95 * S.d + 0.85 * clamp((S.d - 0.74) / 0.26, 0, 1);
+var grow = 0.45 + 0.95 * S.d + 0.85 * clamp((S.d - 0.74) / 0.26, 0, 1) + 0.55 * S.w3;
 var townRow = lerp(sh * 0.95, -TOWN_BAND - 26, Math.pow(S.gp, 2.0));
 var rimEdge = sw / 2 - townHoleHalf(1, sw);
 drawHole(townRow);
+drawShaft3();
+var w3 = S.w3;
 for (var li = 0; li < RIDGES.length; li++) {
 var R = RIDGES[li];
 var base = mixRGB(g.bot, [4, 9, 12], R.dark);
+// 三層では灰色の岩肌に寄せる
+if (w3 > 0) base = mixRGB(base, mixRGB(ROCK3, [4, 6, 8], R.dark * 0.85), w3);
+var edges = w3 > 0.02 ? [] : null;
+var strata = w3 > 0.02 ? [] : null;
 var col = css(base, 1);
 var rim = css(mixRGB(base, [255, 255, 255], 0.10), 1);
 var tex = css(mixRGB(base, [0, 0, 0], 0.35), 1);
@@ -1252,11 +1506,30 @@ silx.fillRect(tx, yy, 1, 1);
 }
 silx.fillStyle = rim;
 silx.fillRect(R.off === 0 ? edge - 1 : sw - edge, yy, 1, 1);
+if (edges) {
+edges[yy] = edge;
+var sk = (idx * 5 + li * 3) % 13;
+if (sk === 0 || sk === 6) strata.push(yy, edge, sk);
 }
+}
+if (edges) drawWall3(R, li, base, shift, edges, strata);
 }
 drawTown(townRow);
 drawScenery(townRow);
 drawNearRim();
+if (S.w3 > 0.01) {
+var mg = bgx.createLinearGradient(0, 0, w, 0);
+mg.addColorStop(0.18, 'rgba(170,178,184,0)');
+mg.addColorStop(0.5, 'rgba(170,178,184,' + (0.10 * S.w3).toFixed(3) + ')');
+mg.addColorStop(0.82, 'rgba(170,178,184,0)');
+bgx.fillStyle = mg;
+bgx.fillRect(0, 0, w, h);
+var bl = bgx.createRadialGradient(w * 0.5, h * 1.08, 0, w * 0.5, h * 1.08, h * 0.8);
+bl.addColorStop(0, 'rgba(214,206,190,' + (0.20 * S.w3).toFixed(3) + ')');
+bl.addColorStop(1, 'rgba(214,206,190,0)');
+bgx.fillStyle = bl;
+bgx.fillRect(0, 0, w, h);
+}
 bgx.drawImage(silo, 0, 0, sw, sh, 0, 0, w, h);
 var fogA = 0.04 + 0.13 * Math.min(1, S.d * 1.6);
 for (var f = 0; f < 3; f++) {
@@ -1517,6 +1790,11 @@ var y = 0;
 for (var n = el; n; n = n.offsetParent) y += n.offsetTop;
 return y;
 }
+// ノアのキャンバスをはみ出して伸びる「つる物」：ツタ（一層）とロープ（三層）
+var HANG = {
+vine1: { spr: 'noaB', swF: 0.75, swA: 6 },
+rope3: { spr: 'noaE', swF: 0.5,  swA: 4 }
+};
 function measureArts() {
 var top = STICKY_TOP * S.vh;
 for (var i = 0; i < arts.length; i++) {
@@ -1538,7 +1816,7 @@ a.pin = false;
 }
 for (i = 0; i < arts.length; i++) {
 var v = arts[i];
-if (v.kind !== 'vine1') continue;
+if (!HANG[v.kind]) continue;
 var L = v.link;
 v.on = !!L && L.pin;
 v.el.style.display = v.on ? '' : 'none';
@@ -1580,9 +1858,9 @@ if (kind === 'chasm')   a.cache = sceneChasm(Math.round(cssW / 4), Math.round(cs
 arts.push(a);
 }
 for (i = 0; i < arts.length; i++) {
-if (arts[i].kind !== 'vine1') continue;
+if (!HANG[arts[i].kind]) continue;
 for (var m = 0; m < arts.length; m++) {
-if (arts[m] !== arts[i] && arts[m].rail === arts[i].rail && arts[m].kind !== 'vine1') {
+if (arts[m] !== arts[i] && arts[m].rail === arts[i].rail && !HANG[arts[m].kind]) {
 arts[i].link = arts[m];
 arts[m].vine = arts[i];
 break;
@@ -1640,6 +1918,22 @@ ctx.fillRect(x + (dir > 0 ? 6 : -12), y, 6, 3);
 ctx.fillStyle = '#63a85f';
 ctx.fillRect(x + (dir > 0 ? 3 : -6), y - 3, 3, 3);
 }
+// ロープ 1 コマ（3px）。ly は撚りの模様位置
+function ropeSeg(ctx, x, y, ly) {
+ctx.fillStyle = '#8c7d63';
+ctx.fillRect(x - 1, y, 3, 3);
+ctx.fillStyle = '#c2b28f';
+ctx.fillRect(x - 1, y, 1, 3);
+ctx.fillStyle = '#5a4f3e';
+ctx.fillRect(x + 1, ((ly / 3) & 1) ? y : y + 2, 1, 1);
+if (ly % 24 === 0) {
+// ところどころに結び目
+ctx.fillStyle = '#6f624c';
+ctx.fillRect(x - 2, y, 5, 3);
+ctx.fillStyle = '#c2b28f';
+ctx.fillRect(x - 2, y, 2, 1);
+}
+}
 function drawNoa(ctx, sp, x, y, s, opt) {
 var bob = Math.sin(opt.t * 1.5) > 0 ? 0 : 1;
 var slouch = opt.slouch || 0;
@@ -1686,15 +1980,18 @@ drawNoa(ctx, sp1, x1, y1, s1, { t: t, slouch: 0 });
 lampGlow(ctx, x1 + 7.5 * s1, y1 + 40 * s1, 58, 0.26 + 0.05 * Math.sin(t * 2), '255,232,170');
 break;
 }
-case 'vine1': {
+case 'vine1':
+case 'rope3': {
 var L = a.link;
 if (!L || !a.on) break;
+var hg = HANG[a.kind];
+var segFn = a.kind === 'rope3' ? ropeSeg : vineSeg;
 var sc = a.scale;
 ctx.setTransform(DPR * sc, 0, 0, DPR * sc, 0, 0);
 ctx.imageSmoothingEnabled = false;
-var spv = SPR.noaB, sv = 7;
+var spv = SPR[hg.spr], sv = 7;
 var tv = S.time + L.seedT;
-var swayV = Math.sin(tv * 0.75) * 6;
+var swayV = Math.sin(tv * hg.swF) * hg.swA;
 var handXv = (a.artW - spv.w * sv) / 2 + swayV + 33 * sv;
 var handOff = (L.h - spv.h * sv - 10) + 24 * sv;
 var handYv = a.artH - L.h + handOff;
@@ -1709,9 +2006,9 @@ var leafV = Math.round(vTopV / 3) * 3;
 for (var yv = Math.round(handYv / 3) * 3 - 3; yv >= startV; yv -= 3) {
 var kv = clamp((handYv - yv) / 260, 0, 1);
 var xv = Math.round(handXv - swayV * kv
-+ Math.sin(tv * 0.75 + kv * 1.4) * 24 * kv * (1 - kv));
++ Math.sin(tv * hg.swF + kv * 1.4) * hg.swA * 4 * kv * (1 - kv));
 ctx.globalAlpha = clamp((yv - vTopV) / fadeV, 0, 1);
-vineSeg(ctx, xv, yv, ((yv - leafV) % 48 + 48) % 48);
+segFn(ctx, xv, yv, ((yv - leafV) % 48 + 48) % 48);
 }
 ctx.globalAlpha = 1;
 break;
@@ -1729,6 +2026,53 @@ lampGlow(ctx, x2 + 18.5 * s2, y2 + 34 * s2, 58 + 14 * f2,
 break;
 }
 case 'noa3': {
+var sp3r = SPR.noaE, s3r = 7;
+var sway3 = Math.sin(t * HANG.rope3.swF) * HANG.rope3.swA;
+var x3r = (W - sp3r.w * s3r) / 2 + sway3;
+var y3r = H - sp3r.h * s3r - 10;
+var hx3 = x3r + 33 * s3r, hy3 = y3r + 24 * s3r;
+var pay3 = Math.round(a.p * 40) * 3;
+if (!(a.vine && a.vine.on)) {
+// 上から握り手までのロープ（スマホなど追従しないとき用）。降りるほど撚り模様が上へ流れる
+for (var ry = hy3 - 3; ry >= 0; ry -= 3) {
+var rk = ry / hy3;
+var rx = Math.round(hx3 - sway3 * (1 - rk));
+ctx.globalAlpha = clamp(ry / 24, 0, 1);
+ropeSeg(ctx, rx, ry, ((ry + pay3) % 48 + 48) % 48);
+}
+ctx.globalAlpha = 1;
+}
+// 握り手から下へ垂れるロープの残り
+for (var ty = hy3 + 3; ty < H - 4; ty += 3) {
+var tk = (ty - hy3) / (H - hy3);
+var tx = Math.round(hx3 + 4 + Math.sin(t * 0.9 + tk * 2.2) * 5 * tk);
+ctx.globalAlpha = clamp((H - 4 - ty) / 30, 0, 1) * 0.9;
+ropeSeg(ctx, tx, ty, ((ty + pay3) % 48 + 48) % 48);
+}
+ctx.globalAlpha = 1;
+var off3 = document.createElement('canvas');
+off3.width = W; off3.height = H;
+var oc3 = off3.getContext('2d');
+oc3.imageSmoothingEnabled = false;
+drawNoa(oc3, sp3r, x3r, y3r, s3r, { t: t * 0.6, slouch: 1 });
+// 縦穴の暗さ。ランプのある下側ほど明るく残す
+oc3.globalCompositeOperation = 'source-atop';
+var dk3 = oc3.createLinearGradient(0, y3r, 0, y3r + sp3r.h * s3r);
+dk3.addColorStop(0, 'rgba(6,8,10,0.52)');
+dk3.addColorStop(1, 'rgba(6,8,10,0.18)');
+oc3.fillStyle = dk3;
+oc3.fillRect(0, 0, W, H);
+ctx.drawImage(off3, 0, 0);
+// 金具（ディセンダー）
+ctx.fillStyle = '#9aa3a8';
+ctx.fillRect(Math.round(hx3 + 2), Math.round(hy3 + 6), 6, 10);
+ctx.fillStyle = '#2b3034';
+ctx.fillRect(Math.round(hx3 + 4), Math.round(hy3 + 9), 2, 4);
+lampGlow(ctx, x3r + 7.5 * s3r, y3r + 40 * s3r, 64,
+0.30 + 0.06 * Math.sin(t * 1.7), '255,226,160');
+break;
+}
+case 'noa4': {
 var sp3 = SPR.noaD, s3 = 7;
 var x3 = (W - sp3.w * s3) / 2, y3 = H - sp3.h * s3 - 14;
 var off = document.createElement('canvas');
@@ -1799,7 +2143,11 @@ var groundEnd = l1 ? Math.max(1, l1.offsetTop - S.vh * 0.30) : 1;
 S.gq = S.y / groundEnd;
 S.gp = clamp(S.gq, 0, 1);
 var ci = sections.indexOf(cur);
-S.d = clamp((ci + p) / Math.max(1, sections.length - 1), 0, 1);
+var dr = DRANGE[cur.getAttribute('data-layer')];
+var di = dr ? lerp(dr[0], dr[1], p) : ci + p;
+S.d = clamp(di / 5, 0, 1);
+// 三層（大断層）の演出の効き具合。二層の終わりから入り、四層の途中で消える
+S.w3 = band(di, 3.85, 4.03, 4.36, 4.62);
 var gc = gradFor(cur.getAttribute('data-layer'), p);
 S.top = gc.top; S.bot = gc.bot;
 if (S.depth !== lastNum) {
@@ -1820,7 +2168,8 @@ aa.p = aa.pin
 }
 function placeTicks() {
 var ticks = document.querySelectorAll('.hud-tick');
-var ids = ['layer-g', 'layer-1', 'layer-2', 'layer-3'];
+// 目盛りは各層の入口に付ける（ラベルはその層の開始深度）
+var ids = ['layer-1', 'layer-2', 'layer-3', 'layer-4', 'layer-end'];
 var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
 for (var i = 0; i < ticks.length && i < ids.length; i++) {
 var el = document.getElementById(ids[i]);
