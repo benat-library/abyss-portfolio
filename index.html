@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ABYSS OF 42 ｜ 潜降記録</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="abyss-root">
+
+  <!-- ==== 固定レイヤー ==== -->
+  <canvas id="abyss-bg"></canvas>
+  <canvas id="abyss-fx"></canvas>
+  <div id="abyss-vignette"></div>
+  <div id="abyss-blackout"></div>
+
+  <!-- 深度計 HUD -->
+  <div id="abyss-hud" aria-hidden="true">
+    <div class="hud-rail">
+      <div class="hud-line"></div>
+      <div class="hud-marker"></div>
+      <div class="hud-tick" style="--p:0">    <b>0m</b></div>
+      <div class="hud-tick" style="--p:.28"><b>1350m</b></div>
+      <div class="hud-tick" style="--p:.62"><b>2600m</b></div>
+      <div class="hud-tick" style="--p:1">   <b>7000m</b></div>
+    </div>
+    <div class="hud-readout">
+      <div class="hud-depth"><span id="hud-num">0</span><i>m</i></div>
+      <div class="hud-name" id="hud-name">地上</div>
+    </div>
+  </div>
+
+  <!-- ==== 本文 ==== -->
+  <main id="abyss-main">
+
+    <!-- ---------- タイトル ---------- -->
+    <section class="stratum title-sec" data-layer="title" data-from="0" data-to="0" data-name="地上">
+      <div class="title-wrap">
+        <p class="title-sup">42 TOKYO ── DESCENT LOG</p>
+        <h1 class="title-main">奈落<span>への</span>潜降</h1>
+        <p class="title-sub">ABYSS&nbsp;OF&nbsp;42</p>
+        <div class="title-rule"></div>
+        <p class="title-lead">
+          ひとつのツイートから始まった潜降は、いまだ底を見ない。<br>
+          ここに刻むのは、深界へ降りていった記録である。
+        </p>
+        <div class="scroll-hint"><span>SCROLL</span><i></i></div>
+      </div>
+    </section>
+
+    <!-- ---------- 地上 ---------- -->
+    <section class="stratum" id="layer-g" data-layer="0" data-from="0" data-to="0"
+             data-name="地上" data-sub="アビスの淵の街 オース">
+      <div class="stratum-head reveal">
+        <p class="sh-index">GROUND / 0m</p>
+        <h2 class="sh-name">アビスの淵の街<b>オース</b></h2>
+        <p class="sh-desc">大穴のふちに張りついた街と、草原。すべての探窟はここから始まる。</p>
+      </div>
+      <div class="stratum-body">
+        <div class="records">
+          <article class="rec reveal" data-kind="origin">
+            <div class="rec-head"><time>2025.11</time><span class="tag">ORIGIN</span></div>
+            <h3>42との遭遇</h3>
+            <p>とあるツイートで42を発見。受験を決意し、適性テストに合格。C言語を触り始める。</p>
+          </article>
+          <article class="rec reveal" data-kind="origin">
+            <div class="rec-head"><time>2025.12</time><span class="tag">ORIGIN</span></div>
+            <h3>予習をやめる</h3>
+            <p>学校説明会で「Piscineは予習しないほうが楽しい！」という助言を受け、予習をやめる。</p>
+          </article>
+          <article class="rec reveal" data-kind="event">
+            <div class="rec-head"><time>2026.02.02 — 02.27</time><span class="tag">EVENT</span></div>
+            <h3>Piscine</h3>
+            <p>4週間の選抜期間に参加。無事に泳ぎ切る。</p>
+          </article>
+          <article class="rec reveal" data-kind="event">
+            <div class="rec-head"><time>2026.04.22</time><span class="tag">EVENT</span></div>
+            <h3>42Tokyo 入学</h3>
+            <p>正式に在校生となる。潜降の開始。</p>
+          </article>
+          <article class="rec reveal" data-kind="milestone">
+            <div class="rec-head"><time>2026.05.08</time><span class="tag">MILESTONE</span></div>
+            <h3>Milestone 0 — Libft</h3>
+            <p>標準ライブラリ関数を自作し、自分だけの基礎ライブラリを組み上げた。</p>
+          </article>
+        </div>
+        <div class="rail"><div class="rail-in reveal"><canvas class="art" data-art="noa0" width="280" height="370"></canvas></div></div>
+      </div>
+    </section>
+
+    <!-- ---------- 深界一層 ---------- -->
+    <section class="stratum flip" id="layer-1" data-layer="1" data-from="0" data-to="1350"
+             data-name="深界一層" data-sub="アビスの淵">
+      <div class="stratum-head reveal">
+        <p class="sh-index">1st LAYER / 0 — 1350m</p>
+        <h2 class="sh-name">Milestone 1<b>深界一層 ── アビスの淵</b></h2>
+        <p class="sh-desc">陽の届く、木々の生い茂る森。ツタを伝って、ただ下へ。</p>
+      </div>
+      <div class="stratum-body">
+        <div class="records">
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.05.13</time><span class="tag">SUCCESS</span></div>
+            <h3>ft_printf</h3>
+            <p>可変長引数と書式指定子を自前で解釈する出力関数を実装。</p>
+          </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.05.18</time><span class="tag">SUCCESS</span></div>
+            <h3>get_next_line</h3>
+            <p>静的変数とバッファを扱い、任意サイズのファイルを1行ずつ読むプログラムの実装。</p>
+          </article>
+          <article class="rec reveal" data-kind="event">
+            <div class="rec-head"><time>2026.05.24 — 05.31</time><span class="tag">EVENT</span></div>
+            <h3>【ハッカソン】スマートスケープ株式会社 SMARTSCAPE CUP — 準優勝</h3>
+            <p>1週間の期間で、ブロックスデュオのAIプレイヤーをチームで開発に挑戦。<br>チームメンバーと議論を重ねながら、戦略を考え、アルゴリズムを設計し、実装と検証を繰り返しました。</p>
+          </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.06.01</time><span class="tag">SUCCESS</span></div>
+            <h3>push_swap</h3>
+            <p>限られた命令だけでスタックを整列させる、アルゴリズムの課題。</p>
+          </article>
+          <article class="rec reveal" data-kind="milestone">
+            <div class="rec-head"><time>2026.06.01</time><span class="tag">MILESTONE</span></div>
+            <h3>Milestone 1 終了</h3>
+            <p>一層を抜ける。ここから先、光は少しずつ遠ざかる。</p>
+          </article>
+        </div>
+        <div class="rail"><div class="rail-in reveal"><div class="noa-wrap">
+          <!-- ツタはノアのキャンバスをはみ出して上へ伸びるので、別の縦長キャンバスに描く -->
+          <canvas class="art vine-cv" data-art="vine1" width="280" height="100"></canvas>
+          <canvas class="art" data-art="noa1" width="280" height="370"></canvas>
+        </div></div></div>
+      </div>
+    </section>
+
+    <!-- ---------- 深界二層 ---------- -->
+    <section class="stratum" id="layer-2" data-layer="2" data-from="1350" data-to="2600"
+             data-name="深界二層" data-sub="誘いの森">
+      <div class="stratum-head reveal">
+        <p class="sh-index">2nd LAYER / 1350 — 2600m</p>
+        <h2 class="sh-name">Milestone 2<b>深界二層 ── 誘いの森</b></h2>
+        <p class="sh-desc">絡み合う木々が上下の感覚を奪う。長く、深い森。</p>
+        <p class="sh-here"><span></span>現在地</p>
+      </div>
+      <div class="stratum-body">
+        <div class="records">
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.06.06</time><span class="tag">SUCCESS</span></div>
+            <h3>Exam Rank 02</h3>
+            <p>制限時間内に、環境ごと与えられた課題を解き切る試験。</p>
+          </article>
+          <article class="rec reveal" data-kind="event">
+            <div class="rec-head"><time>2026.06.14</time><span class="tag">EVENT</span></div>
+            <h3>【ハッカソン】株式会社オリサンキュ<br>コーヒーテイスティングコンクールへ参加</h3>
+            <p>実際に稼働しているコンクール審査システムの仕様書をベースに、即席チームでシステムを開発。</p>
+          </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.06.22</time><span class="tag">SUCCESS</span></div>
+            <h3>Python Module 00</h3>
+            <p>ここからPythonが始まる。</p>
+          </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.06.22</time><span class="tag">SUCCESS</span></div>
+            <h3>Python Module 01</h3>
+          </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.06.25</time><span class="tag">SUCCESS</span></div>
+            <h3>Python Module 02</h3>
+          </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.07.03</time><span class="tag">SUCCESS</span></div>
+            <h3>Python Module 03</h3>
+          </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.07.05</time><span class="tag">SUCCESS</span></div>
+            <h3>Python Module 04</h3>
+          </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.07.08</time><span class="tag">SUCCESS</span></div>
+            <h3>Python Module 05</h3>
+          </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.07.10</time><span class="tag">SUCCESS</span></div>
+            <h3>Python Module 06</h3>
+          </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.07.18</time><span class="tag">SUCCESS</span></div>
+            <h3>Python Module 07</h3>
+          </article>
+          <article class="rec reveal" data-kind="event">
+            <div class="rec-head"><time>2026.07.24</time><span class="tag">EVENT</span></div>
+            <h3> 【ハッカソン】株式会社IPキューブ<br>SMS認証の実装へ参加 — 3位入賞</h3>
+            <p>SMS認証をテーマに、ログイン時に利用されるワンタイムパスワード（SMS認証）の仕組みを、即席チームで実装した。</p>
+          </article>
+          <article class="rec reveal" data-kind="task">
+            <div class="rec-head"><time>2026.08.07</time><span class="tag">SUCCESS</span></div>
+            <h3>Python Module 08</h3>
+          </article>
+          <article class="rec reveal" data-kind="event">
+            <div class="rec-head"><time>2026.08.22 — 08.23</time><span class="tag">EVENT</span></div>
+            <h3>【ハッカソン】都知事杯<br>Open Data Hackathonへ参加 ── 選考待ち</h3>
+            <p>こころを記録し、傾向を見つけ、行動を提案するアプリ、「me-fo」を開発</p>
+            <a href="https://me-fo.tokyo-odh-292.workers.dev/"> me-fo </a>
+            <div class="rec-slide">
+              <iframe src="https://speakerdeck.com/player/ca70afce93b643b080362da47bae88cc"
+                      title="me-fo 発表スライド"
+                      loading="lazy"
+                      allowfullscreen></iframe>
+            </div>
+          </article>
+          <article class="rec reveal" data-kind="event">
+            <div class="rec-head"><time>2026.09.05</time><span class="tag">EVENT</span></div>
+            <h3> 【ハッカソン】株式会社シンシア<br>2日間でCEOを超えるプロダクトをつくれへ参加<br>— 3位,審査員賞入賞</h3>
+            <p>Human Time（人が人として、自らの意思で考え、感じ、向き合い、より良い未来をつくろうとする時間）を増やすことをテーマに、育児支援の包括アプリを即席チームで開発した。</p>
+          </article>
+        </div>
+        <div class="rail"><div class="rail-in reveal"><canvas class="art" data-art="noa2" width="280" height="370"></canvas></div></div>
+      </div>
+    </section>
+
+    <!-- ---------- 深界三層 ---------- -->
+    <section class="stratum unknown" id="layer-3" data-layer="3" data-from="2600" data-to="7000"
+             data-name="深界三層" data-sub="大断層">
+      <div class="stratum-head reveal">
+        <p class="sh-index">3rd LAYER / 2600 — 7000m</p>
+        <h2 class="sh-name">Milestone 3<b>深界三層 ── 大断層</b></h2>
+        <p class="sh-desc">垂直に切り立つ、巨大な縦穴。</p>
+      </div>
+      <div class="stratum-body solo">
+        <div class="unknown-block reveal">
+          <p class="unknown-mark red">???</p>
+          <p class="unknown-note">未到達 ── UNEXPLORED</p>
+        </div>
+        <div class="rail"><div class="rail-in reveal"><canvas class="art" data-art="noa3" width="280" height="370"></canvas></div></div>
+      </div>
+    </section>
+
+    <!-- ---------- 終端 ---------- -->
+    <section class="stratum end-sec" data-layer="end" data-from="7000" data-to="7000" data-name="深界三層">
+      <div class="end-wrap">
+        <p class="end-text red">潜降は、まだ続いている。</p>
+        <p class="end-sig red-dim">THE DESCENT CONTINUES</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
