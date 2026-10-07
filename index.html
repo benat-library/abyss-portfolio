@@ -25,6 +25,16 @@ filter    1s cubic-bezier(.16,.84,.34,1);transition-delay: var(--d, 0ms);will-ch
 0 0 66px rgba(120,26,20,.24);}.end-sig.red-dim{color: #7b241d;letter-spacing: .5em;text-shadow: 0 0 14px rgba(120,26,20,.3);}.rec a{display: inline-flex;align-items: center;gap: 9px;margin-top: 16px;padding: 6px 14px;font-family: var(--font-pixel);font-size: 11px;letter-spacing: .2em;line-height: 1;color: var(--accent, var(--ink-dim));text-decoration: none;border: 1px solid currentColor;background: rgba(255,255,255,.04);clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px));transition: background .35s ease, transform .35s ease, box-shadow .35s ease;}.rec a::after{content: "↗";font-size: 11px;opacity: .75;transform: translateY(-1px);}.rec a:hover{background: rgba(255,255,255,.12);transform: translateY(-2px);box-shadow: 0 0 18px -4px currentColor;}.rec a:focus-visible{outline: 1px solid currentColor;outline-offset: 3px;}
 
 .rec-slide{position: relative;margin-top: 16px;aspect-ratio: 16 / 9;border: 1px solid var(--line);background: rgba(0,0,0,.35);box-shadow: 0 0 18px -6px var(--accent, transparent);}.rec-slide iframe{position: absolute; inset: 0;width: 100%; height: 100%;border: 0;display: block;}.rec:has(.rec-slide):hover{ transform: none; }
+/* 1カラム時もPC版と同じく、キャラをセクションに貼り付けて本文と一緒に流す。
+   本文と同じグリッドセルに重ね、画面右下に小さく sticky させる */
+@media (max-width: 1080px){
+#abyss-root{ --noa-w: clamp(84px, 24vw, 150px); }
+#abyss-root .stratum-body:not(.solo) .rail{grid-column: 1; grid-row: 1; order: 0;display: flex; flex-direction: column; justify-content: flex-end;position: relative; z-index: 3; pointer-events: none;}
+#abyss-root .stratum-body:not(.solo) .rail-in{position: sticky; top: auto; bottom: 10px;margin: 0; padding: 0; justify-content: flex-end;}
+#abyss-root .stratum-body:not(.solo) .records{ padding-bottom: calc(var(--noa-w) * 370 / 280 - 20px); }
+#abyss-root .stratum-body:not(.solo) .art:not(.vine-cv){width: var(--noa-w) !important; height: auto !important;margin-right: -6px;filter: drop-shadow(0 8px 16px rgba(0,0,0,.55));}
+#abyss-root .solo .art:not(.vine-cv){ width: clamp(140px, 45vw, 220px) !important; height: auto !important; }
+}
 </style>
 </head>
 <body>
@@ -1517,7 +1527,9 @@ if (a.rail) {
 a.railTop = docTop(a.rail);
 a.pinTop = a.railTop - top;
 a.pinTravel = a.rail.offsetHeight - ch;
-a.pin = !!a.railIn && getComputedStyle(a.railIn).position === 'sticky'
+// 上端固定の sticky のときだけ PC 版の追従演出（ツタ）を使う。スマホの下端固定では使わない
+var rcs = a.railIn ? getComputedStyle(a.railIn) : null;
+a.pin = !!rcs && rcs.position === 'sticky' && rcs.top !== 'auto'
 && a.pinTravel > 8;
 } else {
 a.pinTravel = 0;
