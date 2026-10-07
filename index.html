@@ -38,6 +38,11 @@ filter    1s cubic-bezier(.16,.84,.34,1);transition-delay: var(--d, 0ms);will-ch
 .work-tech{display: flex; flex-wrap: wrap; gap: 6px;margin: 14px 0 0; padding: 0; list-style: none;}
 .work-tech li{padding: 2px 9px;font-family: var(--font-pixel); font-size: 10px; letter-spacing: .12em;color: var(--ink-dim);border: 1px solid var(--line);background: rgba(255,255,255,.03);}
 .rec p.work-note{ font-size: 12px; color: var(--ink-faint); }
+.rec p.work-credit{ margin-top: 12px; font-size: 11px; line-height: 1.8; color: var(--ink-faint); }
+/* 出典リンクはボタンではなく普通の文字リンクにする */
+.rec .work-credit a{display: inline; margin: 0; padding: 0;font: inherit; letter-spacing: normal;color: var(--ink-dim);border: 0; border-bottom: 1px dotted currentColor;background: none; clip-path: none;}
+.rec .work-credit a::after{ content: none; }
+.rec .work-credit a:hover{ transform: none; box-shadow: none; color: var(--ink); }
 .work-links{ display: flex; flex-wrap: wrap; gap: 10px; }
 .rec .work-links a.work-play{color: #ffe2a6;background: rgba(255,210,122,.10);}
 .rec .work-links a.work-play::after{ content: "▶"; font-size: 9px; }
@@ -249,7 +254,7 @@ filter    1s cubic-bezier(.16,.84,.34,1);transition-delay: var(--d, 0ms);will-ch
           </article>
           <article class="rec reveal" data-kind="event">
             <div class="rec-head"><time>2026.08.22 — 08.23</time><span class="tag">EVENT</span></div>
-            <h3>【ハッカソン】都知事杯<br>Open Data Hackathonへ参加 ── 選考待ち</h3>
+            <h3>【ハッカソン】都知事杯<br>Open Data Hackathonへ参加</h3>
             <p>こころを記録し、傾向を見つけ、行動を提案するアプリ、「me-fo」を開発</p>
             <a href="https://me-fo.tokyo-odh-292.workers.dev/"> me-fo </a>
             <!-- Speaker Deck 埋め込み：src の「ここにID」を差し替える -->
@@ -289,8 +294,15 @@ filter    1s cubic-bezier(.16,.84,.34,1);transition-delay: var(--d, 0ms);will-ch
               </a>
             </div>
             <ul class="work-tech">
-              <li>Python</li><li>pygame</li><li>BFS / Dijkstra</li><li>mypy</li>
+              <li>Python</li><li>pygame</li><li>BFS / Dijkstra</li>
             </ul>
+            <!-- ゲームモードのマップチップは借りた素材。出典は A-Maze-ing の README の Resources より -->
+            <p class="work-credit">グラフィック素材：
+              <a href="https://noir-et-blanc-patisserie.amebaownd.com/" target="_blank" rel="noopener">noir-et-blanc-patisserie</a> /
+              <a href="https://commons.nicovideo.jp/works/agreement/nc276897" target="_blank" rel="noopener">ニコニ・コモンズ nc276897</a> /
+              <a href="https://refmap-l.blog.jp/archives/8655709.html" target="_blank" rel="noopener">refmap-l.blog.jp</a> /
+              <a href="https://w.atwiki.jp/viprpg_sozai/" target="_blank" rel="noopener">VIPRPG素材 @wiki</a>
+            </p>
             <div class="work-links">
               <a class="work-play" href="play/amazing/index.html" target="_blank" rel="noopener">PLAY<small>PC・キーボード推奨</small></a>
               <a href="https://github.com/benat-library/A-Maze-ing" target="_blank" rel="noopener">GitHub</a>
@@ -316,12 +328,12 @@ filter    1s cubic-bezier(.16,.84,.34,1);transition-delay: var(--d, 0ms);will-ch
           <article class="rec reveal" data-kind="milestone">
             <div class="rec-head"><time>2026.09.17</time><span class="tag">MILESTONE</span></div>
             <h3>Milestone 3 突入</h3>
-            <p>二層を抜け、大断層の縁にロープを掛ける。ここからは、ほぼ垂直の下り。</p>
+            <p>二層を抜け、大断層の縁にロープを掛ける。ここからは、ほぼ垂直の絶壁を降りていく。</p>
           </article>
           <article class="rec rec-work reveal" data-kind="work">
             <div class="rec-head"><time>2026.10.01 — 10.04</time><span class="tag">WORKS</span></div>
             <h3>POKER42 ── ポーカー部スコア管理</h3>
-            <p>42 のポーカー部向けに、月間リングの順位・スコア入力・個人戦績・トーナメント表をまとめた Web アプリ。Discord でログインし、42 のサーバーに入っている人だけが使える。</p>
+            <p>42 のポーカー部向けに、月間リングの順位・スコア入力・個人戦績・トーナメント表をまとめた Web アプリを作成。Discord でログインし、42 のサーバーに入っている人だけが使えます。</p>
             <div class="work-shots">
               <a class="shot" href="assets/poker_1.png" target="_blank" rel="noopener">
                 <img src="assets/poker_1.png" alt="POKER42 のホーム画面（月間リング一覧）" loading="lazy" width="736" height="413">
