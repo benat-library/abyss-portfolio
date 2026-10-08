@@ -60,6 +60,22 @@ filter    1s cubic-bezier(.16,.84,.34,1);transition-delay: var(--d, 0ms);will-ch
 #abyss-root .stratum-body:not(.solo) .art:not(.vine-cv){width: var(--noa-w) !important; height: auto !important;margin-right: -6px;filter: drop-shadow(0 8px 16px rgba(0,0,0,.55));}
 #abyss-root .solo .art:not(.vine-cv){ width: clamp(140px, 45vw, 220px) !important; height: auto !important; }
 }
+/* 上昇負荷 */
+#abyss-curse{position: fixed; inset: 0; z-index: 5; pointer-events: none;opacity: 0;background: radial-gradient(ellipse at center, rgba(0,0,0,0) 42%, var(--curse-col, rgba(20,0,10,.85)) 100%);}
+#curse-hud{position: fixed; left: clamp(14px, 3vw, 44px); bottom: 28px; z-index: 6;width: 168px; pointer-events: none;font-family: var(--font-pixel);opacity: 0; transition: opacity .4s ease;}
+.ch-label{font-size: 10px; letter-spacing: .3em; color: #e9b3a8;}
+.ch-label b{ font-weight: normal; margin-left: 10px; color: #ff8a7a; }
+.ch-bar{ margin-top: 6px; height: 4px; background: rgba(255,255,255,.12); overflow: hidden; }
+.ch-bar i{display: block; width: 0; height: 100%;background: linear-gradient(90deg, #e8b552, #d8483a);box-shadow: 0 0 8px #d8483a;}
+.ch-sym{ margin-top: 6px; font-size: 10px; letter-spacing: .2em; color: var(--ink-dim); }
+/* 二層以上：見出しの色がにじむ */
+#abyss-root.cursed-2 .rec h3,
+#abyss-root.cursed-2 .sh-name{ text-shadow: var(--curse-ts), 0 2px 12px rgba(0,0,0,.5); }
+/* 三層：ノアに残像が出る */
+#abyss-root.cursed-3 .stratum .art:not(.vine-cv){filter: drop-shadow(var(--curse-ghost, 0px) 0 0 rgba(190,215,255,.38)) drop-shadow(0 10px 22px rgba(0,0,0,.55));}
+@media (max-width: 1080px){
+#curse-hud{left: 50%; top: 10px; bottom: auto;transform: translateX(-50%);padding: 7px 12px 8px;text-align: center;background: rgba(4,8,10,.72);}
+}
 </style>
 </head>
 <body>
@@ -70,6 +86,13 @@ filter    1s cubic-bezier(.16,.84,.34,1);transition-delay: var(--d, 0ms);will-ch
   <canvas id="abyss-fx"></canvas>
   <div id="abyss-vignette"></div>
   <div id="abyss-blackout"></div>
+  <!-- 上昇負荷：上へスクロールするとたまり、層が深いほど症状が重くなる -->
+  <div id="abyss-curse" aria-hidden="true"></div>
+  <div id="curse-hud" aria-hidden="true">
+    <p class="ch-label">上昇負荷<b id="curse-lv">LV.1</b></p>
+    <div class="ch-bar"><i id="curse-bar"></i></div>
+    <p class="ch-sym" id="curse-sym">めまい・吐き気</p>
+  </div>
 
   <!-- 深度計 HUD -->
   <div id="abyss-hud" aria-hidden="true">
@@ -808,7 +831,10 @@ gp: 0,
 gq: 0,
 depth: 0,
 layerName: '地上',
+layer: 'title',
 w3: 0,
+curse: 0,
+curseLv: 0,
 top: [127, 182, 214],
 bot: [232, 154, 82]
 };
@@ -1454,6 +1480,14 @@ silx.fillRect(R.off === 0 ? Math.round(cxh + hh) : Math.round(cxh - hh) - 1, Mat
 silx.globalAlpha = w3 * 0.8;
 silx.fillStyle = stL;
 silx.fillRect(Math.round(cxh - Ho.w / 2) - 1, Math.round(y0) + Ho.h, Ho.w + 2, 1);
+if (S.curseLv >= 3 && S.curse > 0.25 && !Ho.lit && Math.sin(S.time * 2.6 + Ho.ph * 5) > 0.2) {
+// 上昇負荷の幻覚：横穴の奥から、ないはずの目がこちらを見る
+silx.globalAlpha = Math.min(1, w3 * (S.curse - 0.15) * 1.6);
+silx.fillStyle = '#ff4a3a';
+var ey = Math.round(y0 + Ho.h * 0.45);
+silx.fillRect(Math.round(cxh) - 2, ey, 1, 1);
+silx.fillRect(Math.round(cxh) + 1, ey, 1, 1);
+}
 if (Ho.lit) {
 // 横穴の奥に、誰かのランプの明かりがちらつく
 silx.globalAlpha = w3 * (0.45 + 0.35 * Math.sin(S.time * 1.3 + Ho.ph));
@@ -2150,6 +2184,7 @@ var to   = parseFloat(cur.getAttribute('data-to')) || 0;
 var p = clamp((mid - cur.offsetTop) / Math.max(1, cur.offsetHeight), 0, 1);
 S.depth = Math.round(lerp(from, to, p));
 S.layerName = cur.getAttribute('data-name') || '';
+S.layer = cur.getAttribute('data-layer') || '';
 var l1 = document.getElementById('layer-1');
 var groundEnd = l1 ? Math.max(1, l1.offsetTop - S.vh * 0.30) : 1;
 S.gq = S.y / groundEnd;
@@ -2177,6 +2212,100 @@ aa.p = aa.pin
 ? clamp((S.y - aa.pinTop) / aa.pinTravel, 0, 1)
 : clamp((mid - aa.secTop) / aa.secH, 0, 1);
 }
+}
+// ---- 上昇負荷 ----
+// 上へスクロールした量だけ負荷がたまり、止まると少しして抜けていく。層が深いほどたまりやすく、症状が増える
+var CURSE_LV   = { '1': 1, '2': 2, '3': 3, '4': 3, 'end': 3 };
+var CURSE_GAIN = [0, 0.25, 0.45, 0.70];
+var CURSE_SYM  = ['', 'めまい・吐き気', '頭痛・しびれ', '幻覚・幻聴'];
+var CURSE_COL  = ['', 'rgba(8,22,18,.82)', 'rgba(46,4,14,.86)', 'rgba(34,0,30,.9)'];
+var CALM = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+var rootEl = document.getElementById('abyss-root');
+var curseEl = document.getElementById('abyss-curse');
+var curseHud = document.getElementById('curse-hud');
+var curseLvEl = document.getElementById('curse-lv');
+var curseBar = document.getElementById('curse-bar');
+var curseSym = document.getElementById('curse-sym');
+var curseLastY = null, curseHold = 0, curseShown = -1, curseStyled = false;
+function updateCurse(dt) {
+var lv = CURSE_LV[S.layer] || 0;
+if (curseLastY === null) curseLastY = S.y;
+var dy = S.y - curseLastY;
+curseLastY = S.y;
+// 画面3枚分を超える一瞬の移動（リンクで飛んだときなど）は数えない
+if (dy < 0 && lv > 0 && -dy < S.vh * 3) {
+S.curse = Math.min(1, S.curse + (-dy / S.vh) * CURSE_GAIN[lv]);
+S.curseLv = Math.max(S.curseLv, lv);
+curseHold = 0.6;
+}
+if (curseHold > 0) curseHold -= dt;
+else S.curse = Math.max(0, S.curse - dt * 0.28);
+if (S.curse <= 0.001) S.curseLv = 0;
+applyCurse();
+}
+function applyCurse() {
+var I = S.curse, lv = S.curseLv, t = S.time;
+var on = I > 0.005 && lv > 0;
+// ゲージ
+var show = I > 0.02 && lv > 0;
+if (show !== (curseShown === 1)) { curseHud.style.opacity = show ? 1 : 0; curseShown = show ? 1 : 0; }
+if (lv > 0) {
+curseBar.style.width = (I * 100).toFixed(1) + '%';
+if (curseLvEl.textContent !== 'LV.' + lv) {
+curseLvEl.textContent = 'LV.' + lv;
+curseSym.textContent = CURSE_SYM[lv];
+curseEl.style.setProperty('--curse-col', CURSE_COL[lv]);
+}
+}
+rootEl.classList.toggle('cursed-2', on && lv >= 2);
+rootEl.classList.toggle('cursed-3', on && lv >= 3);
+if (!on) {
+if (curseStyled) {
+curseEl.style.opacity = 0;
+bg.style.transform = ''; bg.style.filter = '';
+curseStyled = false;
+}
+return;
+}
+curseStyled = true;
+// 周りの暗がり。二層からは鼓動のように脈打つ
+var beat = (lv >= 2 && !CALM) ? 0.72 + 0.28 * Math.pow(Math.abs(Math.sin(t * 3.4)), 6) : 0.75;
+curseEl.style.opacity = (I * beat).toFixed(3);
+if (CALM) return;
+// 背景のふらつきとぼやけ
+var A = I * [0, 6, 11, 15][lv], rot = I * [0, 0.25, 0.5, 0.8][lv];
+bg.style.transform = 'translate(' + (Math.sin(t * 1.3) * A).toFixed(2) + 'px,' +
+(Math.sin(t * 0.9 + 1) * A * 0.5).toFixed(2) + 'px) rotate(' +
+(Math.sin(t * 0.7) * rot).toFixed(3) + 'deg) scale(' + (1 + 0.05 * I).toFixed(3) + ')';
+bg.style.filter = 'blur(' + (I * 1.6).toFixed(2) + 'px)' +
+(lv >= 2 ? ' hue-rotate(' + (Math.sin(t * 1.1) * 14 * I).toFixed(1) + 'deg) saturate(' + (1 + 0.4 * I).toFixed(2) + ')' : '');
+// 見出しの色ずれ（二層〜）
+if (lv >= 2) {
+var ab = (I * (2 + 2.5 * Math.abs(Math.sin(t * 7)))).toFixed(1);
+rootEl.style.setProperty('--curse-ts', ab + 'px 0 rgba(255,70,70,.55), -' + ab + 'px 0 rgba(70,220,255,.55)');
+}
+// ノアの残像（三層）
+if (lv >= 3) rootEl.style.setProperty('--curse-ghost', (Math.sin(t * 2.3) * 16 * I).toFixed(1) + 'px');
+}
+// 三層の負荷：画面に走るノイズ（fx キャンバスに重ねる）
+function drawCurseNoise() {
+if (CALM || S.curseLv < 3 || S.curse < 0.1) return;
+var I = S.curse, W = fx.width, H = fx.height;
+fxx.setTransform(1, 0, 0, 1, 0, 0);
+var bars = Math.round(I * 5);
+for (var i = 0; i < bars; i++) {
+if (Math.random() > 0.55) continue;
+fxx.globalAlpha = I * (0.08 + Math.random() * 0.16);
+fxx.fillStyle = Math.random() < 0.5 ? '#d9e4e8' : '#ff6a6a';
+fxx.fillRect(0, Math.random() * H, W, (1 + Math.random() * 3) * DPR);
+}
+var dots = Math.round(I * 260);
+fxx.fillStyle = '#e6eef0';
+for (var d = 0; d < dots; d++) {
+fxx.globalAlpha = Math.random() * 0.35 * I;
+fxx.fillRect(Math.random() * W, Math.random() * H, 2 * DPR, 2 * DPR);
+}
+fxx.globalAlpha = 1;
 }
 function placeTicks() {
 var ticks = document.querySelectorAll('.hud-tick');
@@ -2212,8 +2341,10 @@ var dt = last ? Math.min(0.05, (ts - last) / 1000) : 0.016;
 last = ts;
 S.time += dt;
 updateScroll();
+updateCurse(dt);
 drawBG();
 drawPetals(dt);
+drawCurseNoise();
 for (var i = 0; i < arts.length; i++) if (arts[i].vis) drawArt(arts[i], dt);
 requestAnimationFrame(frame);
 }
