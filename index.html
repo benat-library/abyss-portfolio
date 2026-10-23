@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ABYSS OF 42 ｜ 潜降記録</title>
+<meta name="description" content="42 Tokyo での課題・イベント・制作物を、深界へ潜っていく記録としてまとめたポートフォリオ。">
+<!-- OGP（SNS でリンクを貼ったときのカード表示） -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ABYSS OF 42">
+<meta property="og:title" content="ABYSS OF 42 ｜ 潜降記録">
+<meta property="og:description" content="42 Tokyo での課題・イベント・制作物を、深界へ潜っていく記録としてまとめたポートフォリオ。">
+<meta property="og:url" content="https://benat-library.github.io/abyss-portfolio/">
+<meta property="og:image" content="https://benat-library.github.io/abyss-portfolio/assets/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="奈落への潜降 ── ABYSS OF 42">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
@@ -327,8 +340,8 @@ filter    1s cubic-bezier(.16,.84,.34,1);transition-delay: var(--d, 0ms);will-ch
               <a href="https://w.atwiki.jp/viprpg_sozai/" target="_blank" rel="noopener">VIPRPG素材 @wiki</a>
             </p>
             <div class="work-links">
-              <a class="work-play" href="play/amazing/index.html" target="_blank" rel="noopener">PLAY<small>PC・キーボード推奨</small></a>
-              <a href="https://github.com/benat-library/A-Maze-ing" target="_blank" rel="noopener">GitHub</a>
+              <a class="work-play" data-goatcounter-click="amazing-play" href="play/amazing/index.html" target="_blank" rel="noopener">PLAY<small>PC・キーボード推奨</small></a>
+              <a data-goatcounter-click="amazing-github" href="https://github.com/benat-library/A-Maze-ing" target="_blank" rel="noopener">GitHub</a>
             </div>
           </article>
           
@@ -372,18 +385,17 @@ filter    1s cubic-bezier(.16,.84,.34,1);transition-delay: var(--d, 0ms);will-ch
             </ul>
             <p class="work-note">※ 部員限定のため、アプリ本体は公開していません。</p>
             <div class="work-links">
-              <a href="https://github.com/benat-library/Poker_Sore_Rank" target="_blank" rel="noopener">GitHub</a>
+              <a data-goatcounter-click="poker42-github" href="https://github.com/benat-library/Poker_Sore_Rank" target="_blank" rel="noopener">GitHub</a>
             </div>
           </article>
-          <article class="rec reveal" data-kind="task">
-            <div class="rec-head"><time>2026.10.01--</time><span class="tag">IN PROGRESS</span></div>
-            <h3>Philosophers</h3>
-            <p>食卓を囲む哲学者たちを、スレッドとミューテックスで餓死させずに回し続ける課題。（ダミー）</p>
-          </article>
-          <article class="rec reveal" data-kind="task">
-            <div class="rec-head"><time>2026.--.--</time><span class="tag">NEXT</span></div>
-            <h3>minishell</h3>
-            <p>bash を手本に、小さなシェルをチームで組み上げる。（ダミー）</p>
+          <article class="rec rec-work reveal" data-kind="work">
+            <div class="rec-head"><time>2026.10.22</time><span class="tag">WORKS</span></div>
+            <h3>libft ルーレット ── ライブコーディング練習</h3>
+            <p>libft のレビュー最後に行うライブコーディングに向けて、関数をランダムに抽選する練習用ツールを作成。難易度での絞り込み、関数の除外、10分タイマー、正解コードの表示、抽選履歴に対応。</p>
+            <div class="work-links">
+              <a class="work-play" data-goatcounter-click="random-libft-open" href="https://benat-library.github.io/random_libft/" target="_blank" rel="noopener">OPEN<small>ブラウザで使えます</small></a>
+              <a data-goatcounter-click="random-libft-github" href="https://github.com/benat-library/random_libft" target="_blank" rel="noopener">GitHub</a>
+            </div>
           </article>
         </div>
         <div class="rail"><div class="rail-in reveal"><div class="noa-wrap">
@@ -2378,5 +2390,7 @@ else boot();
 })();
 
 </script>
+<!-- アクセス解析（GoatCounter）：Cookie なし。data-goatcounter-click を付けたリンクはクリック数も記録される -->
+<script data-goatcounter="https://benat-portfolio.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
